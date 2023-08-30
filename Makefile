@@ -6,17 +6,16 @@
 #    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 16:21:33 by yothmani          #+#    #+#              #
-#    Updated: 2023/08/30 16:23:22 by yothmani         ###   ########.fr        #
+#    Updated: 2023/08/30 19:09:25 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = push_swap
 
-SRCS = push_swap.c lib.c swap.c main.c lib2.c lib3.c\
-low_sort.c  push.c\
-reverse_rotate.c rotate.c\
-lib5.c lib4.c high_sort.c\
+SRCS = lib.c lib2.c lib3.c lib4.c lib5.c\
+low_sort.c high_sort.c main.c push_swap.c\
+push.c reverse_rotate.c rotate.c swap.c\
 
 OBJS = ${SRCS:.c=.o}
 

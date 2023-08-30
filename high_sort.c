@@ -6,27 +6,27 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:15:02 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:15:28 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:41:24 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	begin_sorting(t_list **stack1, t_list **stack2, t_push *push, int count)
+void	sort_and_partition(t_list **a, t_list **b, t_push *push, int count)
 {
 	int	i;
 
 	i = -1;
 	while (++i < count)
 	{
-		if ((*stack1)->index <= push->mid)
-			pb(stack1, stack2);
+		if ((*a)->index <= push->mid)
+			pb(a, b);
 		else
 		{
-			if (count_lst(stack2) > 1 && (((*stack2)->index) < (push->mid / 2)))
-				rr(stack1, stack2);
+			if (stack_size(b) > 1 && (((*b)->index) < (push->mid / 2)))
+				rr(a, b);
 			else
-				ra(stack1);
+				ra(a);
 		}
 	}
 	push->max = push->mid;
@@ -34,96 +34,96 @@ void	begin_sorting(t_list **stack1, t_list **stack2, t_push *push, int count)
 	push->flag++;
 }
 
-void	find_next(t_list **stack1, t_list **stack2, t_push *push)
+void	find_next_index(t_list **a, t_list **b, t_push *push)
 {
-	if (count_lst(stack2) > 0 && ((*stack2)->index == push->next))
-		pa(stack1, stack2);
-	else if ((*stack1)->index == push->next)
+	if (stack_size(b) > 0 && ((*b)->index == push->next))
+		pa(a, b);
+	else if ((*a)->index == push->next)
 	{
-		(*stack1)->flag = -1;
-		ra(stack1);
+		(*a)->flag = -1;
+		ra(a);
 		push->next++;
 	}
-	else if ((count_lst(stack2)) > 2
-		&& ft_lstlast(*stack2)->index == push->next)
-		rrb(stack2);
-	else if ((*stack1)->next->index == push->next)
-		sa(stack1);
-	else if ((count_lst(stack1)) > 1 && ((*stack1)->next->index == push->next)
-		&& ((*stack2)->next->index == push->next + 1))
-		ss(stack1, stack2);
+	else if ((stack_size(b)) > 2
+		&& ft_lstlast(*b)->index == push->next)
+		rrb(b);
+	else if ((*a)->next->index == push->next)
+		sa(a);
+	else if ((stack_size(a)) > 1 && ((*a)->next->index == push->next)
+		&& ((*b)->next->index == push->next + 1))
+		ss(a, b);
 	else
 		return ;
-	find_next(stack1, stack2, push);
+	find_next_index(a, b, push);
 }
 
-void	push_a(t_list **stack1, t_list **stack2, t_push *push)
+void	push_a(t_list **a, t_list **b, t_push *push)
 {
-	int	count_b;
+	int	size_b;
 	int	i;
 
 	i = -1;
-	count_b = count_lst(stack2);
-	while (count_lst(stack2) && ++i < count_b)
+	size_b = stack_size(b);
+	while (stack_size(b) && ++i < size_b)
 	{
-		if ((*stack2)->index == push->next)
-			find_next(stack1, stack2, push);
-		else if ((*stack2)->index >= push->mid)
+		if ((*b)->index == push->next)
+			find_next_index(a, b, push);
+		else if ((*b)->index >= push->mid)
 		{
-			(*stack2)->flag = push->flag;
-			pa(stack1, stack2);
+			(*b)->flag = push->flag;
+			pa(a, b);
 		}
-		else if ((*stack2)->index < push->mid)
-			rb(stack2);
+		else if ((*b)->index < push->mid)
+			rb(b);
 	}
 	push->max = push->mid;
 	push->mid = (push->max - push->next) / 2 + push->next;
 	push->flag++;
 }
 
-void	push_b(t_list **stack1, t_list **stack2, t_push *push)
+void	push_b(t_list **a, t_list **b, t_push *push)
 {
 	int	now_flag;
 
-	now_flag = (*stack1)->flag;
-	if ((*stack1)->flag != 0)
+	now_flag = (*a)->flag;
+	if ((*a)->flag != 0)
 	{
-		while ((*stack1)->flag == now_flag)
+		while ((*a)->flag == now_flag)
 		{
-			if ((*stack1)->index != push->next)
-				pb(stack1, stack2);
-			find_next(stack1, stack2, push);
+			if ((*a)->index != push->next)
+				pb(a, b);
+			find_next_index(a, b, push);
 		}
 	}
-	else if ((*stack1)->flag == 0)
+	else if ((*a)->flag == 0)
 	{
-		while ((*stack1)->flag != -1)
+		while ((*a)->flag != -1)
 		{
-			if ((*stack1)->index != push->next)
-				pb(stack1, stack2);
-			find_next(stack1, stack2, push);
+			if ((*a)->index != push->next)
+				pb(a, b);
+			find_next_index(a, b, push);
 		}
 	}
-	if (count_lst(stack2))
-		push->max = (find_max_lst(stack2))->index;
+	if (stack_size(b))
+		push->max = (find_max_val(b))->index;
 	push->mid = (push->max - push->next) / 2 + push->next;
 }
 
-void	big_sorting(t_list **stack1, t_list **stack2, int count)
+void	big_sort(t_list **a, t_list **b, int count)
 {
 	t_push	push;
 
-	set_index(stack1);
-	push.next = find_min_lst(stack1)->index;
-	push.max = find_max_lst(stack1)->index;
+	set_index(a);
+	push.next = find_min_val(a)->index;
+	push.max = find_max_val(a)->index;
 	push.mid = push.max / 2 + push.next;
 	push.flag = 0;
-	begin_sorting(stack1, stack2, &push, count);
-	while (!(check_sorting_a(stack1, count)))
+	sort_and_partition(a, b, &push, count);
+	while (!(stack_is_sorted(a, count)))
 	{
-		if (count_lst(stack2) == 0)
-			push_b(stack1, stack2, &push);
+		if (stack_size(b) == 0)
+			push_b(a, b, &push);
 		else
-			push_a(stack1, stack2, &push);
+			push_a(a, b, &push);
 	}
 }

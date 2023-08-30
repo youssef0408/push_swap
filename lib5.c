@@ -6,20 +6,20 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:20:12 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:20:31 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:33:39 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_identical(t_list **stack1)
+int	check_duplicates(t_list **stack)
 {
 	t_list	*tmp1;
 	t_list	*tmp2;
 	int		i;
 
-	tmp1 = *stack1;
-	i = count_lst(stack1);
+	tmp1 = *stack;
+	i = stack_size(stack);
 	while (i > 0)
 	{
 		tmp2 = tmp1->next;
@@ -35,19 +35,19 @@ int	check_identical(t_list **stack1)
 	return (0);
 }
 
-int	check_sorting_a(t_list **stack1, int count)
+int	stack_is_sorted(t_list **stack, int count)
 {
 	int	len;
 
-	len = count_lst(stack1);
+	len = stack_size(stack);
 	if (len != count)
 		return (0);
-	if (check_sorting(stack1) == 1)
+	if (check_if_sorted(stack) == 1)
 		return (0);
 	return (1);
 }
 
-void	set_index(t_list **stack1)
+void	set_index(t_list **stack)
 {
 	t_list			*tmp;
 	t_list			*min_list;
@@ -55,12 +55,12 @@ void	set_index(t_list **stack1)
 	int				i;
 	int				j;
 
-	i = count_lst(stack1);
+	i = stack_size(stack);
 	j = 0;
 	while (j < i)
 	{
 		min = LLONG_MAX;
-		tmp = *stack1;
+		tmp = *stack;
 		while (tmp)
 		{
 			if ((tmp->num < min) && (tmp->index == -1))
@@ -80,7 +80,7 @@ void	free_stack(t_list *stack, int i)
 	t_list	*tmp;
 	int		len;
 
-	len = count_lst(&stack);
+	len = stack_size(&stack);
 	if (i == 1)
 		ft_putstr_fd("Error\n", 2);
 	while (len--)
@@ -93,30 +93,30 @@ void	free_stack(t_list *stack, int i)
 	exit(0);
 }
 
-void	free_stacks(t_list *stack1, t_list *stack2, int i)
+void	free_both_stacks(t_list *a, t_list *b, int i)
 {
-	t_list	*tmp_one;
-	t_list	*tmp_two;
-	int		len_one;
-	int		len_two;
+	t_list	*tmp_a;
+	t_list	*tmp_b;
+	int		size_a;
+	int		size_b;
 
-	len_one = count_lst(&stack1);
-	len_two = count_lst(&stack2);
+	size_a = stack_size(&a);
+	size_b = stack_size(&b);
 	if (i == 1)
 		ft_putstr_fd("Error\n", 2);
-	while (len_one--)
+	while (size_a--)
 	{
-		tmp_one = stack1->next;
-		free(stack1);
-		stack1 = NULL;
-		stack1 = tmp_one;
+		tmp_a = a->next;
+		free(a);
+		a = NULL;
+		a = tmp_a;
 	}
-	while (len_two--)
+	while (size_b--)
 	{
-		tmp_two = stack2->next;
-		free(stack2);
-		stack2 = NULL;
-		stack2 = tmp_two;
+		tmp_b = b->next;
+		free(b);
+		b = NULL;
+		b = tmp_b;
 	}
 	exit(0);
 }

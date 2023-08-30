@@ -6,92 +6,105 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:17:55 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:18:08 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:05:58 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	count_word(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
-	unsigned int	n;
-	unsigned int	i;
+	int	count;
 
-	n = 0;
-	i = 0;
-	while (s[i])
+	count = 0;
+	while (*s)
 	{
-		if (s[i] == c)
-			i++;
-		else
+		if (*s != c)
 		{
-			n++;
-			while (s[i] && s[i] != c)
-				i++;
+			count++;
+			while (*s != c && *s)
+				s++;
 		}
+		else
+			s++;
 	}
-	return (n);
+	return (count);
 }
 
-static int	count_char(char const *s, char c)
+static char	*ft_cut_str(const char *str, char c)
 {
-	unsigned int	i;
+	int		i;
+	int		word_len;
+	char	*new;
 
 	i = 0;
-	while (s[i] && s[i] != c)
+	word_len = 0;
+	while (str[i] == c)
 		i++;
-	return (i);
+	while (str[i + word_len] != c && str[i + word_len] != '\0')
+		word_len++;
+	new = malloc(sizeof(char) * (word_len + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (i < word_len)
+	{
+		new[i] = str[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
-static char	**clear(char **dst)
+static void	*ft_free(char **tab, int i)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (dst[i])
-		free(dst[i++]);
-	free(dst);
+	while (i >= 0)
+	{
+		free(tab[i]);
+		i--;
+	}
+	free(tab);
 	return (NULL);
 }
 
-static char	**write_split(char **dst, const char *s, char c)
+void	free_split(char **split)
 {
-	char			*word;
-	unsigned int	j;
+	int	i;
 
-	j = 0;
-	while (*s)
+	i = 0;
+	while (split[i])
 	{
-		if (*s && *s == c)
-			s++;
-		else
-		{
-			word = (char *)malloc(sizeof(char) * (count_char(s, c) + 1));
-			if (word == 0)
-				return (clear(dst));
-			while (*s && *s != c)
-				word[j++] = *s++;
-			word[j] = '\0';
-			j = 0;
-			*dst++ = word;
-		}
+		free(split[i]);
+		i++;
 	}
-	*dst++ = 0;
-	return (dst);
+	free(split);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char			**dst;
-	unsigned int	k;
+	char	**tab;
+	int		i;
 
 	if (!s)
-		return (0);
-	k = count_word(s, c);
-	dst = (char **)malloc(sizeof(char *) * (k + 1));
-	if (dst == 0)
-		return (0);
-	if (write_split(dst, s, c))
-		return (dst);
-	return (NULL);
+		return (NULL);
+	tab = malloc(sizeof(char *) * (count_words(s, c) + 1));
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (*s)
+	{
+		if (*s != c)
+		{
+			tab[i] = ft_cut_str(s, c);
+			if (!tab[i])
+				return (ft_free(tab, i - 1));
+			i++;
+			while (*s != c && *s)
+				s++;
+		}
+		else
+			s++;
+	}
+	tab[i] = NULL;
+	return (tab);
 }

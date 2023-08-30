@@ -6,12 +6,11 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:18:17 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:18:48 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:06:38 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
@@ -36,23 +35,23 @@ void	ft_putnbr_fd(int n, int fd)
 
 	if (n == -2147483648)
 	{
-		write (fd, "-2147483648", 11);
+		write(fd, "-2147483648", 11);
 	}
 	else if (n < 0)
 	{
-		write (fd, "-", 1);
+		write(fd, "-", 1);
 		ft_putnbr_fd(-1 * n, fd);
 	}
 	else if (n > 9)
 	{
 		ft_putnbr_fd(n / 10, fd);
 		c = n % 10 + 48;
-		write (fd, &c, 1);
+		write(fd, &c, 1);
 	}
 	else
 	{
 		c = n + 48;
-		write (fd, &c, 1);
+		write(fd, &c, 1);
 	}
 }
 
@@ -77,19 +76,4 @@ t_list	*ft_lstlast(t_list *lst)
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			write(fd, &s[i], 1);
-			i++;
-		}
-	}
 }

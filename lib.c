@@ -6,12 +6,11 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:17:05 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:17:29 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:06:31 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 static void	check_flag(int flag)
 {
@@ -22,14 +21,14 @@ static void	check_flag(int flag)
 	}
 }
 
-static int	check_sign(char **str, int i, int *m)
+static int	check_sign(char **str, int i, int *j)
 {
 	while (*str[i] == 32 || (*str[i] >= 9 && *str[i] <= 13))
 		i++;
 	if (*str[i] == '+' || *str[i] == '-')
 	{
 		if (*str[i] == '-')
-			*m = -1;
+			*j = -1;
 		i++;
 	}
 	return (i);
@@ -65,4 +64,19 @@ int	ft_atoi(char *str)
 		error();
 	check_flag(flag);
 	return (n);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+	}
 }

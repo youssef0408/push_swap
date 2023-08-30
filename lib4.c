@@ -6,13 +6,13 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:19:13 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:19:42 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:09:31 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*find_min_lst(t_list **stack)
+t_list	*find_min_val(t_list **stack)
 {
 	t_list	*min;
 	t_list	*tmp;
@@ -28,7 +28,7 @@ t_list	*find_min_lst(t_list **stack)
 	return (min);
 }
 
-t_list	*find_max_lst(t_list **stack)
+t_list	*find_max_val(t_list **stack)
 {
 	t_list	*max;
 	t_list	*tmp;
@@ -59,7 +59,7 @@ int	check_pos(t_list **stack, t_list *min)
 	return (i);
 }
 
-int	count_lst(t_list **stack)
+int	stack_size(t_list **stack)
 {
 	t_list	*tmp;
 	int		i;
@@ -74,11 +74,11 @@ int	count_lst(t_list **stack)
 	return (i);
 }
 
-int	check_sorting(t_list **stack1)
+int	check_if_sorted(t_list **stack)
 {
 	t_list	*tmp;
 
-	tmp = *stack1;
+	tmp = *stack;
 	while (tmp && tmp->next)
 	{
 		if (tmp->num > tmp->next->num)

@@ -6,20 +6,19 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:10:15 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:10:35 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:06:48 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "push_swap.h"
 
-void	sorting_two(t_list **stack)
+void	sort_2_nums(t_list **stack)
 {
 	if ((*stack)->num > (*stack)->next->num)
 		sa(stack);
 }
 
-void	sorting_three(t_list **stack)
+void	sort_3_nums(t_list **stack)
 {
 	int	a;
 	int	b;
@@ -28,42 +27,45 @@ void	sorting_three(t_list **stack)
 	a = (*stack)->num;
 	b = (*stack)->next->num;
 	c = (*stack)->next->next->num;
-	if ((b > c) && (c > a))
+	if (a < b && b < c)
+		return ;
+	else if (a < b && b > c && a < c)
 	{
-		sa(stack);
-		ra(stack);
-	}
-	else if ((b > a) && (a > c))
 		rra(stack);
-	else if ((c > a) && (a > b))
 		sa(stack);
-	else if ((a > c) && (c > b))
+	}
+	else if (a > b && b < c && a < c)
+		sa(stack);
+	else if (a > b && b < c && a > c)
 		ra(stack);
-	else if ((a > b) && (b > c))
+	else if (a < b && b > c && a > c)
+		rra(stack);
+	else if (a > b && b > c)
 	{
 		sa(stack);
 		rra(stack);
 	}
 }
 
-void	sorting_five(t_list **stack1, t_list **stack2)
+void	sort_4_and_5_nums(t_list **a, t_list **b)
 {
-	push_min_lst(stack1, stack2);
-	sorting_three(stack1);
-	while (count_lst(stack2) > 0)
-		pa(stack1, stack2);
+	push_top3_min_to_b(a, b);
+	sort_3_nums(a);
+	while (stack_size(b) > 0)
+		pa(a, b);
 }
 
-void	push_min_lst(t_list **stack1, t_list **stack2)
+void	push_top3_min_to_b(t_list **a, t_list **b)
 {
-	while (count_lst(stack1) > 3)
+	while (stack_size(a) > 3)
 	{
-		if ((check_pos(stack1, find_min_lst(stack1))) == 0)
-			pb(stack1, stack2);
-		else if ((check_pos(stack1, find_min_lst(stack1)))
-			< (count_lst(stack1) / 2 + 1))
-			ra(stack1);
+		if ((check_pos(a, find_min_val(a))) == 0)
+			pb(a, b);
+		else if ((check_pos(a, find_min_val(a))) < (stack_size(a) / 2 + 1))
+			ra(a);
 		else
-			rra(stack1);
+			rra(a);
+		if (check_if_sorted(a) == 0 && stack_size(b) == 0)
+			break ;
 	}
 }

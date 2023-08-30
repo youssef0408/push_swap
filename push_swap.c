@@ -6,26 +6,26 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:14:27 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 16:14:36 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:53:10 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sorting(t_list **stack1, int count)
+void	push_swap(t_list **a, int count)
 {
-	t_list	*stack2;
+	t_list	*b;
 
-	stack2 = NULL;
-	if (!check_sorting(stack1))
-		free_stacks(*stack1, stack2, 0);
+	b = NULL;
+	if (!check_if_sorted(a))
+		free_both_stacks(*a, b, 0);
 	if (count == 2)
-		sorting_two(stack1);
+		sort_2_nums(a);
 	else if (count == 3)
-		sorting_three(stack1);
+		sort_3_nums(a);
 	else if (count == 4 || count == 5)
-		sorting_five(stack1, &stack2);
+		sort_4_and_5_nums(a, &b);
 	else if (count > 5)
-		big_sorting(stack1, &stack2, count);
-	free_stacks(*stack1, stack2, 0);
+		big_sort(a, &b, count);
+	free_both_stacks(*a, b, 0);
 }
