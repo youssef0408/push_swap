@@ -6,18 +6,38 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:17:05 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 19:06:31 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:07:00 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+	}
+}
+
+void	error_42(void)
+{
+	ft_putstr_fd("Error\n", 2);
+	exit(1);
+}
+
 static void	check_flag(int flag)
 {
 	if (flag == 0)
 	{
-		ft_putstr_fd("Error\n", 2);
-		exit(1);
+		error_42();
 	}
 }
 
@@ -32,12 +52,6 @@ static int	check_sign(char **str, int i, int *j)
 		i++;
 	}
 	return (i);
-}
-
-void	error(void)
-{
-	ft_putstr_fd("Error\n", 2);
-	exit(1);
 }
 
 int	ft_atoi(char *str)
@@ -58,25 +72,10 @@ int	ft_atoi(char *str)
 		n = n * 10 + m * (str[i] - 48);
 		i++;
 		if ((m == 1 && n < 0) || (m == -1 && n > 0))
-			error();
+			error_42();
 	}
 	if (str[i])
-		error();
+		error_42();
 	check_flag(flag);
 	return (n);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-		{
-			write(fd, &s[i], 1);
-			i++;
-		}
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:18:17 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 19:06:38 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 13:14:34 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 }
 
-t_list	*ft_lstnew(int content)
+t_list	*ft_lstnew(int data)
 {
 	t_list	*elem;
 
 	elem = malloc(sizeof(t_list));
 	if (!elem)
 		return (NULL);
-	elem->num = content;
+	elem->content = data;
 	elem->index = -1;
 	elem->flag = 0;
 	elem->next = NULL;

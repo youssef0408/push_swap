@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:08:08 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 18:54:10 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:15:39 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@
 typedef struct s_list
 {
 	struct s_list	*next;
-	int				num;
+	int				content;
 	int				index;
 	int				flag;
 }					t_list;
 
-typedef struct s_push
+typedef struct s_sort
 {
 	int				next;
 	int				max;
-	int				mid;
+	int				pivot;
 	int				flag;
-}					t_push;
+}					t_sort;
 
-void				sort_and_partition(t_list **a, t_list **b, t_push *push,
+void				sort_and_partition(t_list **a, t_list **b, t_sort *push,
 						int count);
-void				find_next_index(t_list **a, t_list **b, t_push *push);
-void				push_a(t_list **a, t_list **b, t_push *push);
-void				push_b(t_list **a, t_list **b, t_push *push);
+void				find_next_index(t_list **a, t_list **b, t_sort *push);
+void				push_a(t_list **a, t_list **b, t_sort *push);
+void				push_b(t_list **a, t_list **b, t_sort *push);
 void				big_sort(t_list **a, t_list **b, int count);
 
-void				error(void);
+void				error_42(void);
 int					ft_atoi(char *str);
 void				ft_putstr_fd(char *s, int fd);
 
@@ -49,7 +49,7 @@ char				**ft_split(char const *s, char c);
 
 void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_putnbr_fd(int n, int fd);
-t_list				*ft_lstnew(int content);
+t_list				*ft_lstnew(int data);
 t_list				*ft_lstlast(t_list *lst);
 
 t_list				*find_min_val(t_list **stack);
@@ -59,7 +59,7 @@ int					stack_size(t_list **stack);
 int					check_if_sorted(t_list **stack);
 
 int					check_duplicates(t_list **stack);
-int					stack_is_sorted(t_list **stack, int count);
+int					stack_validation(t_list **stack, int count);
 void				set_index(t_list **stack);
 void				free_stack(t_list *stack, int i);
 void				free_both_stacks(t_list *a, t_list *b, int i);

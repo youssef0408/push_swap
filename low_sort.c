@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:10:15 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 19:06:48 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:23:54 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sort_2_nums(t_list **stack)
 {
-	if ((*stack)->num > (*stack)->next->num)
+	if ((*stack)->content > (*stack)->next->content)
 		sa(stack);
 }
 
@@ -24,12 +24,10 @@ void	sort_3_nums(t_list **stack)
 	int	b;
 	int	c;
 
-	a = (*stack)->num;
-	b = (*stack)->next->num;
-	c = (*stack)->next->next->num;
-	if (a < b && b < c)
-		return ;
-	else if (a < b && b > c && a < c)
+	a = (*stack)->content;
+	b = (*stack)->next->content;
+	c = (*stack)->next->next->content;
+	if (a < b && b > c && a < c)
 	{
 		rra(stack);
 		sa(stack);

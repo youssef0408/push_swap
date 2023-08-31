@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:20:12 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 18:33:39 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 14:15:18 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_duplicates(t_list **stack)
 		tmp2 = tmp1->next;
 		while (tmp2)
 		{
-			if (tmp1->num == tmp2->num)
+			if (tmp1->content == tmp2->content)
 				return (1);
 			tmp2 = tmp2->next;
 		}
@@ -35,7 +35,7 @@ int	check_duplicates(t_list **stack)
 	return (0);
 }
 
-int	stack_is_sorted(t_list **stack, int count)
+int	stack_validation(t_list **stack, int count)
 {
 	int	len;
 
@@ -47,32 +47,19 @@ int	stack_is_sorted(t_list **stack, int count)
 	return (1);
 }
 
-void	set_index(t_list **stack)
+int	stack_size(t_list **stack)
 {
-	t_list			*tmp;
-	t_list			*min_list;
-	long long int	min;
-	int				i;
-	int				j;
+	t_list	*tmp;
+	int		i;
 
-	i = stack_size(stack);
-	j = 0;
-	while (j < i)
+	i = 0;
+	tmp = *stack;
+	while (tmp)
 	{
-		min = LLONG_MAX;
-		tmp = *stack;
-		while (tmp)
-		{
-			if ((tmp->num < min) && (tmp->index == -1))
-			{
-				min = tmp->num;
-				min_list = tmp;
-			}
-			tmp = tmp->next;
-		}
-		min_list->index = j;
-		j++;
+		i++;
+		tmp = tmp->next;
 	}
+	return (i);
 }
 
 void	free_stack(t_list *stack, int i)

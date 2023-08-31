@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:17:55 by yothmani          #+#    #+#             */
-/*   Updated: 2023/08/30 19:05:58 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/08/31 13:56:45 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,6 @@ static char	*ft_cut_str(const char *str, char c)
 	return (new);
 }
 
-static void	*ft_free(char **tab, int i)
-{
-	while (i >= 0)
-	{
-		free(tab[i]);
-		i--;
-	}
-	free(tab);
-	return (NULL);
-}
-
 void	free_split(char **split)
 {
 	int	i;
@@ -78,6 +67,17 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+}
+
+static void	*ft_free(char **tab, int i)
+{
+	while (i >= 0)
+	{
+		free(tab[i]);
+		i--;
+	}
+	free(tab);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
