@@ -6,41 +6,51 @@
 #    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/30 16:21:33 by yothmani          #+#    #+#              #
-#    Updated: 2023/08/30 19:09:25 by yothmani         ###   ########.fr        #
+#    Updated: 2024/03/01 11:26:53 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = push_swap
+CC = gcc
+CFLAGS = -g -Wall -Wextra -Werror
 
-SRCS = lib.c lib2.c lib3.c lib4.c lib5.c\
-low_sort.c high_sort.c main.c push_swap.c\
-push.c reverse_rotate.c rotate.c swap.c\
+SRC_DIR = src
+OBJ_DIR = obj
+INC_DIR = inc
 
-OBJS = ${SRCS:.c=.o}
+SRC_FILES = lib.c lib2.c lib3.c lib4.c lib5.c \
+            low_sort.c high_sort.c main.c push_swap.c \
+            push.c reverse_rotate.c rotate.c swap.c
 
-GCC = @gcc -Wall -Werror -Wextra -g
+SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+
+INC = -I$(INC_DIR)
 
 RM = rm -rf
 
-INCLUDES = ./
+all: $(OBJ_DIR) $(NAME)
 
-.c.o:
-	$(GCC) -I $(INCLUDES) -c $< -o $(<:.c=.o)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-$(NAME): $(OBJS)
-	GCC -o $(NAME) $(OBJS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/push_swap.h
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-all:	$(NAME)
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) -o $@ $(OBJ)
+	@echo "✨ $(NAME) has been compiled successfully! ✨"
 
 clean:
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJ_DIR)
+	@echo "🧹 Cleaned object files!"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) push_swap.dSYM
+	@echo "🗑️  Cleaned executable!"
 
-re:	fclean all
+re: fclean all
 
 Visualizer:
 	./push_swap_visualizer/build/bin/visualizer
